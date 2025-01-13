@@ -45,6 +45,7 @@ static bool command_generates_command_complete_event(uint16_t hci_opcode)
 	switch (hci_opcode) {
 	case SDC_HCI_OPCODE_CMD_LC_DISCONNECT:
 	case SDC_HCI_OPCODE_CMD_LE_SET_PHY:
+    case SDC_HCI_OPCODE_CMD_VS_SWITCH_TO_CODED_PHY:
 	case SDC_HCI_OPCODE_CMD_LC_READ_REMOTE_VERSION_INFORMATION:
 	case SDC_HCI_OPCODE_CMD_LE_CREATE_CONN:
 	case SDC_HCI_OPCODE_CMD_LE_CONN_UPDATE:
@@ -1689,6 +1690,8 @@ static uint8_t vs_cmd_put(uint8_t const *const cmd, uint8_t *const raw_event_out
 		return sdc_hci_cmd_vs_zephyr_read_tx_power((void *)cmd_params,
 							   (void *)event_out_params);
 #endif /* CONFIG_BT_CTLR_TX_PWR_DYNAMIC_CONTROL */
+    case SDC_HCI_OPCODE_CMD_VS_SWITCH_TO_CODED_PHY:
+      return sdc_hci_cmd_vs_switch_to_coded_phy((void *)cmd_params);
 	case SDC_HCI_OPCODE_CMD_VS_READ_SUPPORTED_VS_COMMANDS:
 		*param_length_out += sizeof(sdc_hci_cmd_vs_read_supported_vs_commands_return_t);
 		vs_supported_commands((void *)event_out_params);
